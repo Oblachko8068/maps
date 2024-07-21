@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.maps.databinding.InfoBlockBinding
 
 class InfoRecyclerAdapter(
-    private val infoList: List<String?>,
+    private val infoList: List<String>,
     private val infoNameList: List<String>
 ) : RecyclerView.Adapter<InfoRecyclerAdapter.InfoViewHolder>() {
 

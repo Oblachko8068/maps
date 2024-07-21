@@ -108,51 +108,7 @@ class RequestRepositoryImpl {
                 Metro(distance = 1.2, line = "Калужско-Рижская", name = "Медведково")
             )
         )
-        val addressInfo = result.toAddressInfo()
+        val addressInfo = AddressInfoFormatter.toAddressInfo(result)
         mainFragment.onRequestSuccess(addressInfo)
-    }
-
-    private fun AddressResponse.toAddressInfo(): List<String> {
-        val addressInfoList = mutableListOf<String>()
-        with(addressInfoList) {
-            add(this@toAddressInfo.result)
-            add(this@toAddressInfo.postal_code ?: "-")
-            add(this@toAddressInfo.country ?: "-")
-            add(this@toAddressInfo.federal_district ?: "-")
-            add(this@toAddressInfo.region ?: "-")
-            add(this@toAddressInfo.area ?: "-")
-            add(this@toAddressInfo.city ?: "-")
-            add(this@toAddressInfo.city_district ?: "-")
-            add(this@toAddressInfo.settlement ?: "-")
-            add(this@toAddressInfo.street ?: "-")
-            add(this@toAddressInfo.house ?: "-")
-            add(this@toAddressInfo.flat ?: "-")
-            add(this@toAddressInfo.entrance ?: "-")
-            add(this@toAddressInfo.floor ?: "-")
-            add(this@toAddressInfo.flat_area ?: "-")
-            add(this@toAddressInfo.flat_price ?: "-")
-            add(getActualityText(this@toAddressInfo.fias_actuality_state))
-            add(this@toAddressInfo.geo_lat ?: "-")
-            add(this@toAddressInfo.geo_lon ?: "-")
-            add(getMetroText(this@toAddressInfo.metro))
-        }
-        return addressInfoList
-    }
-
-    private fun getMetroText(metro: List<Metro>?): String {
-        return metro?.joinToString(separator = "\n") { metroStation ->
-            "${metroStation.name} (${metroStation.line}, ${metroStation.distance} км)"
-        }
-            ?: "-"
-    }
-
-    private fun getActualityText(fiasActualityState: String?): String {
-        return when (fiasActualityState?.toIntOrNull()) {
-            0 -> "актуальный"
-            in 1..50 -> "переименован"
-            51 -> "переподчинен"
-            99 -> "удален"
-            else -> "-"
-        }
     }
 }
