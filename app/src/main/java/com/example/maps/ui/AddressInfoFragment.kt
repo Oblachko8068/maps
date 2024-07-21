@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.maps.R
 import com.example.maps.databinding.FragmentAddressInfoBinding
 
-class AddressInfoFragment(private val addressInfo: List<String>) : Fragment() {
+class AddressInfoFragment : Fragment() {
 
     private var _binding: FragmentAddressInfoBinding? = null
     private val binding get() = _binding!!
@@ -28,14 +28,14 @@ class AddressInfoFragment(private val addressInfo: List<String>) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerAdapter()
-        val address = "г Москва, ул Сухонская"
+        val addressInfo = arguments?.getStringArrayList(ARG_ADDRESS_INFO)?.toList() ?: emptyList()
+        setUpRecyclerAdapter(addressInfo)
         binding.btnOpenMap.setOnClickListener {
-            openMap(address)
+            openMap(addressInfo[0])
         }
     }
 
-    private fun setUpRecyclerAdapter() {
+    private fun setUpRecyclerAdapter(addressInfo: List<String>) {
         val infoNamesList = resources.getStringArray(R.array.info_names_array).toList()
         recyclerView = binding.recyclerView
         recyclerView?.setHasFixedSize(true)
@@ -50,5 +50,18 @@ class AddressInfoFragment(private val addressInfo: List<String>) : Fragment() {
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
         startActivity(mapIntent)
+    }
+
+    companion object {
+
+        private const val ARG_ADDRESS_INFO = "address_info"
+
+        fun newInstance(addressInfo: List<String>): AddressInfoFragment {
+            return AddressInfoFragment().apply {
+                arguments = Bundle().apply {
+                    putStringArrayList(ARG_ADDRESS_INFO, ArrayList(addressInfo))
+                }
+            }
+        }
     }
 }

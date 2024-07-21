@@ -131,13 +131,28 @@ class RequestRepositoryImpl {
             add(this@toAddressInfo.floor ?: "-")
             add(this@toAddressInfo.flat_area ?: "-")
             add(this@toAddressInfo.flat_price ?: "-")
-            add(this@toAddressInfo.fias_actuality_state ?: "-")
+            add(getActualityText(this@toAddressInfo.fias_actuality_state))
             add(this@toAddressInfo.geo_lat ?: "-")
             add(this@toAddressInfo.geo_lon ?: "-")
-            add(if (this@toAddressInfo.metro != null) metro.joinToString(separator = "\n") { metroStation ->
-                "${metroStation.name} (${metroStation.line}, ${metroStation.distance} км)"
-            } else "-")
+            add(getMetroText(this@toAddressInfo.metro))
         }
         return addressInfoList
+    }
+
+    private fun getMetroText(metro: List<Metro>?): String {
+        return metro?.joinToString(separator = "\n") { metroStation ->
+            "${metroStation.name} (${metroStation.line}, ${metroStation.distance} км)"
+        }
+            ?: "-"
+    }
+
+    private fun getActualityText(fiasActualityState: String?): String {
+        return when (fiasActualityState?.toIntOrNull()) {
+            0 -> "актуальный"
+            in 1..50 -> "переименован"
+            51 -> "переподчинен"
+            99 -> "удален"
+            else -> "-"
+        }
     }
 }

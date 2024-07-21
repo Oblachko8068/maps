@@ -25,7 +25,7 @@ class InfoRecyclerAdapter(
         val name = infoNameList[position]
         val desc = infoList[position]
         holder.binding.name.text = name
-        holder.binding.description.text = desc ?: "-"
+        holder.binding.description.text = desc
     }
 
     override fun getItemCount(): Int = infoNameList.size

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.maps.R
-import com.example.maps.RequestResultListener
 import com.example.maps.data.repository.RequestRepositoryImpl
 import com.example.maps.databinding.FragmentMainBinding
 import kotlinx.coroutines.launch
@@ -33,25 +32,28 @@ class MainFragment : Fragment(), RequestResultListener {
             if (inputText != "") {
                 val requestRepositoryImpl = RequestRepositoryImpl()
                 viewLifecycleOwner.lifecycleScope.launch {
-                    requestRepositoryImpl.makeRequest("мск сухонска 11/-89", this@MainFragment)
+                    requestRepositoryImpl.makeRequest(inputText, this@MainFragment)
                 }
             } else {
-                Toast.makeText(requireContext(), "Введите адрес", Toast.LENGTH_SHORT).show()
+                showToast("Введите адрес")
             }
         }
-
     }
 
     override fun onRequestSuccess(addressInfo: List<String>) {
         parentFragmentManager
             .beginTransaction()
             .addToBackStack(null)
-            .replace(R.id.fragmentContainer, AddressInfoFragment(addressInfo))
+            .replace(R.id.fragmentContainer, AddressInfoFragment.newInstance(addressInfo))
             .commit()
     }
 
     override fun onRequestFailed() {
-        Toast.makeText(requireContext(), "Адрес не найден", Toast.LENGTH_SHORT).show()
+        showToast("Адрес не найден")
+    }
+
+    private fun showToast(outputText: String) {
+        Toast.makeText(requireContext(), outputText, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
