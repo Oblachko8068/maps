@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.example.maps.R
 import com.example.maps.data.repository.RequestRepositoryImpl
 import com.example.maps.databinding.FragmentMainBinding
-import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(), RequestResultListener {
 
@@ -29,11 +27,9 @@ class MainFragment : Fragment(), RequestResultListener {
         super.onViewCreated(view, savedInstanceState)
         binding.submit.setOnClickListener {
             val inputText = binding.searchText.text.toString()
-            if (inputText != "") {
+            if (inputText.isNotBlank()) {
                 val requestRepositoryImpl = RequestRepositoryImpl()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    requestRepositoryImpl.makeRequest(inputText, this@MainFragment)
-                }
+                requestRepositoryImpl.makeRequest(inputText, this@MainFragment)
             } else {
                 showToast("Введите адрес")
             }
@@ -48,8 +44,8 @@ class MainFragment : Fragment(), RequestResultListener {
             .commit()
     }
 
-    override fun onRequestFailed() {
-        showToast("Адрес не найден")
+    override fun onRequestFailed(message: String) {
+        showToast(message)
     }
 
     private fun showToast(outputText: String) {

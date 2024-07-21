@@ -5,10 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    val instance: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://cleaner.dadata.ru/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://dadata.ru/api/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val api: DadataApi = retrofit.create(DadataApi::class.java)
 }

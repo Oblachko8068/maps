@@ -4,5 +4,5 @@ interface RequestResultListener {
 
     fun onRequestSuccess(addressInfo: List<String>)
 
-    fun onRequestFailed()
+    fun onRequestFailed(message: String)
 }
