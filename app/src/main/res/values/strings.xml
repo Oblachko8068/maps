@@ -1,5 +1,27 @@
 <resources>
     <string name="app_name">Maps</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="info_names_array">
+        <item>Адрес</item>
+        <item>Индекс</item>
+        <item>Страна</item>
+        <item>Федеральный округ</item>
+        <item>Регион</item>
+        <item>Район региона</item>
+        <item>Город</item>
+        <item>Район города</item>
+        <item>Населенный пункт</item>
+        <item>Улица</item>
+        <item>Дом</item>
+        <item>Квартира</item>
+        <item>Подъезд</item>
+        <item>Этаж</item>
+        <item>Площадь</item>
+        <item>Рыночная стоимость</item>
+        <item>Актуальность данных</item>
+        <item>Широта</item>
+        <item>Долгота</item>
+        <item>Метро</item>
+    </string-array>
+
 </resources>

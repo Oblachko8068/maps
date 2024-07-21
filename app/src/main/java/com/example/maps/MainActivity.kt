@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.maps.databinding.ActivityMainBinding
+import com.example.maps.ui.AddressInfoFragment
+import com.example.maps.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragmentContainer, AddressInfoFragment())
+            .add(R.id.fragmentContainer, MainFragment())
             .commit()
     }
 }
